@@ -15,7 +15,7 @@ IANA (Internet Assigned Numbers Authority)- Internet Numbers. IPV4,IPV6 address 
 IEEE (Institute of Electrical and Electronics Engineers). International, main standards are IEEE 802.11 (Wireless LAN), IEEE 802.3 (Ethernet), 802.10 (VLAN), IEEE 802.16 (Broadband Wireless Access, BWA), IEEE 802.1x (Port-based network access control standards,
 used for authenticating and authirizing devices connecting to a LAN or WLAN, IEEE 802.1ad (Provider Bridging, PB, Standards) also known as Q-in-Q for implementing virtual LAN (VLAN) stacking in Ethernet networks).
 ```
-## OSI layer and units
+## OSI layer and units -R
 ```
 -Binary. Bit, Nibble (4 bits), Byte (8 bits), Half Word (16 bits), Word (32 bits)
 -Decimal 
@@ -157,3 +157,78 @@ DTP attacks relate to the VLAN hopping attack discussed earlier. Attackers can c
 This attack can be mitigated by using the switchport nonegotiate interface command to disable DTP. Additionally you should manually assign switchports to either Access (switchport mode access) or Trunk (switchport mode trunk).
 
 ```
+```
+## Splunk, SO, Suricata, Elastic, Kibana, WS, CyberChef. -R 
+```
+Network traffic sniffers (Active-nmap, Passive)
+
+# TCP Dump and filters 
+```
+sudo tcpdump -A #print payload in ASCII
+sudo tcpdump -D #list all interfaces
+sudo tcpdump -i #specify capture interface
+sudo tcpdump -e #print data-link headers 
+sudo tcpdump -X or XX #print payloac in HEX and ASCII
+sudo tcpdump -r analysis-exam.pcap -XX -vv #Will give you everything, ensure you are in the right dir.
+sudo tcpdump port 80 or 22 -vn
+sudo tcpdump icmp
+sudo tcpdump ip
+```
+## sockets and snippers -R
+## byte offsets -R
+```
+https://www.wains.be/pub/networking/tcpdump_advanced_filters.txt
+```
+```
+https://miro.com/app/board/o9J_klSqCSY=/?share_link_id=16133753693
+```
+```
+https://packetlife.net/media/library/12/tcpdump.pdf
+```
+Can you use tcpdump to nail down a search on a big PCAP and output the search to create a reduced PCAP to open later on WS.
+```
+0x81000 VLAN header -R
+0x8dd double packing -R
+```
+
+## BITWISE MASKING EX.
+```
+tcpdump 'ether[12:4] & 0xffff0fff = 0x81000abc #look at ether byte 12 and look at 4 bytes and exact matcher/0 Not important (QoS) -PCP/DEIR
+tcpdump 'ip[1] & 252 = 32' -Q re-explain look for a DSCP of 32 
+```
+## Filter Logic- Most exclusive:
+```
+tcp[13] = 0x11 #all bits must match ACK/FIN mask - or 1
+```
+```
+tcp[13] & 0x11 = 0x11 #ACK/FIN both have to be on. 
+```
+```
+tcp[13] & 0x11 > 0 Can be any combination except both off
+tcp[13] & 0x11 !=0 Can be any combination except both off
+```
+BPFS -R
+
+
+# BPF Filters CTF
+ tcpdump 'ip6[6] = 17 || ip[9] = 17' -r BPFCheck.pcap | wc -l #Looks for all ipv4 and ipv6 headers that are UDP.
+ tcpdump -n ' ip[8] < 65 ||  ip6[7] < 65' -r BPFCheck.pcap | wc -l #Looks for all ipv4 and ipv6 headers that have a ttl of 64 or less.
+ tcpdump 'tcp[0:2] >1024 || udp[0:2] > 1024' -r BPFCheck.pcap | wc -l #Looks for all packets that are TCP and have a port > than 1024.
+
+What is the Berkeley Packet Filter, using tcpdump, to capture all packets with an IP ID field of 213?
+tcpdump 'ip[4:2] = 213' -r BPFCheck.pcap | wc -l
+
+What is the Berkeley Packet Filter, using tcpdump, to capture an attacker using vlan hopping to move from vlan 1 to vlan 10?
+tcpdump -n 'ether[12:4] & 0xffff0fff = 0x81000001 && ether[16:4] & 0xffff0fff = 0x8100000A' -r BPFCheck.pcap | wc -l `
+
+
+
+
+
+
+
+
+
+
+
+
