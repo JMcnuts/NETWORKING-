@@ -366,15 +366,15 @@ TCP Raw
 
 ```
 #!/usr/bin/python3
-# For building the socket
+#For building the socket
 import socket
-# For system level commands
+#For system level commands
 import sys
-# For doing an array in the TCP checksum
+#For doing an array in the TCP checksum
 import array
-# For establishing the packet structure (Used later on), this will allow direct access to the methods and functions in the struct module
+#For establishing the packet structure (Used later on), this will allow direct access to the methods and functions in the struct module
 from struct import pack
-# For encoding
+#For encoding
 import base64    # base64 module
 import binascii    # binascii module
 # Create a raw socket.
@@ -393,56 +393,56 @@ dst_ip = "127.0.0.1"
 ##################
 ##Build Packet Header##
 ##################
-# Lets add the IPv4 header information
-# This is normally 0x45 or 69 for Version and Internet Header Length
+#Lets add the IPv4 header information
+#This is normally 0x45 or 69 for Version and Internet Header Length
 ip_ver_ihl =
-# This combines the DSCP and ECN feilds.  Type of service/QoS
+#This combines the DSCP and ECN feilds.  Type of service/QoS
 ip_tos =
-# The kernel will fill in the actually length of the packet
+#The kernel will fill in the actually length of the packet
 ip_len = 0
-# This sets the IP Identification for the packet. 1-65535
+#This sets the IP Identification for the packet. 1-65535
 ip_id =
-# This sets the RES/DF/MF flags and fragmentation offset
+#This sets the RES/DF/MF flags and fragmentation offset
 ip_frag =
-# This determines the TTL of the packet when leaving the machine. 1-255
+#This determines the TTL of the packet when leaving the machine. 1-255
 ip_ttl =
-# This sets the IP protocol to 16 (CHAOS) (reference IANA) Any other protocol it will expect additional headers to be created.
+#This sets the IP protocol to 16 (CHAOS) (reference IANA) Any other protocol it will expect additional headers to be created.
 ip_proto =
-# The kernel will fill in the checksum for the packet
+#The kernel will fill in the checksum for the packet
 ip_check = 0
-# inet_aton(string) will convert an IP address to a 32 bit binary number
+#inet_aton(string) will convert an IP address to a 32 bit binary number
 ip_srcadd = socket.inet_aton(src_ip)
 ip_dstadd = socket.inet_aton(dst_ip)
 
 #################
-## Pack the IP Header ##
+##Pack the IP Header ##
 #################
-# This portion creates the header by packing the above variables into a structure. The ! in the string means 'Big-Endian' network order, while the code following specifies how to store the info. Endian explained. Refer to link for character meaning.
+#This portion creates the header by packing the above variables into a structure. The ! in the string means 'Big-Endian' network order, while the code following specifies how to store the info. Endian explained. Refer to link for character meaning.
 
 ip_header = pack('!BBHHHBBH4s4s' , ip_ver_ihl, ip_tos, ip_len, ip_id, ip_frag, ip_ttl, ip_proto, ip_check, ip_srcadd, ip_dstadd)
 
 ################
 ##Build TCP Header##
 ################
-# source port. 1-65535
+#source port. 1-65535
 tcp_src =
-# destination port. 1-65535
+#destination port. 1-65535
 tcp_dst =
-# sequence number. 1-4294967296
+#sequence number. 1-4294967296
 tcp_seq =
-# tcp ack sequence number. 1-4294967296
+#tcp ack sequence number. 1-4294967296
 tcp_ack_seq =
-# can optionaly set the value of the offset and reserve. Offset is from 5 to 15. RES is normally 0.
+#can optionaly set the value of the offset and reserve. Offset is from 5 to 15. RES is normally 0.
 #tcp_off_res =
-# data offset specifying the size of tcp header * 4 which is 20
+#data offset specifying the size of tcp header * 4 which is 20
 tcp_data_off =
-# the 3 reserve bits + ns flag in reserve field
+#the 3 reserve bits + ns flag in reserve field
 tcp_reserve =
-# Combine the left shifted 4 bit tcp offset and the reserve field
+#Combine the left shifted 4 bit tcp offset and the reserve field
 tcp_off_res = (tcp_data_off << 4) + tcp_reserve
-# can optionally just set the value of the TCP flags
+#can optionally just set the value of the TCP flags
 #tcp_flags =
-# Tcp flags by bit starting from right to left
+#Tcp flags by bit starting from right to left
 tcp_fin = 0                    # Finished
 tcp_syn = 0                    # Synchronization
 tcp_rst = 0                    # Reset
@@ -451,7 +451,7 @@ tcp_ack = 0                    # Acknowledgement
 tcp_urg = 0                    # Urgent
 tcp_ece = 0                    # Explicit Congestion Notification Echo
 tcp_cwr = 0                    # Congestion Window Reduced
-# Combine the tcp flags by left shifting the bit locations and adding the bits together
+#Combine the tcp flags by left shifting the bit locations and adding the bits together
 tcp_flags = tcp_fin + (tcp_syn << 1) + (tcp_rst << 2) + (tcp_psh << 3) + (tcp_ack << 4) + (tcp_urg << 5) + (tcp_ece << 6) + (tcp_cwr << 7)
 # maximum allowed window size reordered to network order. 1-65535 (socket.htons is deprecated)
 tcp_win =
@@ -580,3 +580,39 @@ base64 file.txt > file-encoded.txt
 ```
 base64 -d file-encoded.txt > file-decoded.txt
 ```
+
+-sS	nmap 192.168.1.1 -sS	        TCP SYN port scan (Default)
+-sT	nmap 192.168.1.1 -sT	        TCP connect port scan (Default without root privilege)
+-sU	nmap 192.168.1.1 -sU	        UDP port scan
+-sA	nmap 192.168.1.1 -sA	        TCP ACK port scan
+-sW	nmap 192.168.1.1 -sW            TCP Window port scan
+-sM	nmap 192.168.1.1 -sM	        TCP Maimon port scan
+-sL	nmap 192.168.1.1-3 -sL	        No Scan. List targets only
+-sn	nmap 192.168.1.1/24 -sn         Disable port scanning. Host discovery only.
+-Pn	nmap 192.168.1.1-5 -Pn		Disable host discovery. Port scan only.
+-PS	nmap 192.168.1.1-5 -PS22-25,80	TCP SYN discovery on port x. Port 80 by default
+-PA	nmap 192.168.1.1-5 -PA22-25,80	TCP ACK discovery on port x. Port 80 by default
+-PU	nmap 192.168.1.1-5 -PU53	UDP discovery on port x. Port 40125 by default
+-PR	nmap 192.168.1.1-1/24 -PR	ARP discovery on local network
+-n	nmap 192.168.1.1 -n		Never do DNS resolution
+-p	nmap 192.168.1.1 -p 	21			Port scan for port x
+-p	nmap 192.168.1.1 -p 	21-100			Port range
+-p	nmap 192.168.1.1 -p 	U:53,T:21-25,80		Port scan multiple TCP and UDP ports
+-p	nmap 192.168.1.1 -p-	Port scan all ports
+-p	nmap 192.168.1.1 -p 	http,https		Port scan from service name
+-F	nmap 192.168.1.1 -F	Fast port scan (100 ports)
+-top-ports	nmap 192.168.1.1 -top-ports 2000	Port scan the top x ports
+-p-65535	nmap 192.168.1.1 -p-65535	Leaving off initial port in range makes the scan start at port 1
+-p0-	nmap 192.168.1.1 -p0-	Leaving off end port in range
+makes the scan go through to port 65535
+
+
+
+
+
+
+
+
+
+
+
