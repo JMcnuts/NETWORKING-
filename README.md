@@ -609,8 +609,9 @@ makes the scan go through to port 65535
 
 
 
+ssh net1_student2@10.50.21.8 -X
 
-
+passw: password2
 
 
 
