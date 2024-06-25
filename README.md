@@ -626,3 +626,96 @@ show ip route (VyOS)
 
 
 
+Download a file from a remote directory to a local directory
+```
+$ scp student@172.16.82.106:secretstuff.txt /home/student
+```
+Upload a file to a remote directory from a local directory
+```
+$ scp secretstuff.txt student@172.16.82.106:/home/student
+```
+Copy a file from a remote host to a separate remote host
+```
+$ scp -3 student@172.16.82.106:/home/student/secretstuff.txt student@172.16.82.112:/home/student
+```
+password:    password:
+
+Recursive upload of a folder to remote
+```
+$ scp -r folder/ student@172.16.82.106:
+```
+Recursive download of a folder from remote
+```
+$ scp -r student@172.16.82.106:folder/ .
+```
+Download a file from a remote directory to a local directory
+```
+$ scp -P 1111 student@172.16.82.106:secretstuff.txt .
+```
+Upload a file to a remote directory from a local directory
+```
+$ scp -P 1111 secretstuff.txt student@172.16.82.106:
+```
+#Loopback address + tunnel's port. Are the 2 items that we need to interact with our tunnels.
+
+Create a Dynamic Port Forward to target device
+```
+$ ssh student@172.16.82.106 -D 9050 -NT
+```
+Download a file from a remote directory to a local directory
+```
+$ proxychains scp student@localhost:secretstuff.txt .
+```
+Upload a file to a remote directory from a local directory
+```
+$ proxychains scp secretstuff.txt student@localhost:
+```
+
+##NETCAT: CLIENT TO LISTENER FILE TRANSFER
+
+###Listener (receive file):
+```
+nc -lvp 9001 > newfile.txt
+```
+###Client (sends file):
+```
+nc 172.16.82.106 9001 < file.txt
+```
+
+#NETCAT RELAY DEMOS
+##Listener - Listener
+
+###On Blue_Host-1 Relay:
+```
+$ mknod mypipe p
+
+$ nc -lvp 1111 < mypipe | nc -lvp 3333 > mypipe
+```
+
+
+###On Internet_Host (send):
+```
+$ nc 172.16.82.106 1111 < secret.txt
+```
+###On Blue_Priv_Host-1 (receive):
+```
+$ nc 192.168.1.1 3333 > newsecret.txt
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
