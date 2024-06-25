@@ -613,7 +613,16 @@ ssh net1_student2@10.50.21.8 -X
 
 passw: password2
 
+-nmap 
+-netcat (does not use -p for ports)
 
+
+
+
+
+wget -r  http://172.16.82.106 (DNS server enum)
+wget -r  ftp://172.16.82.106
+show ip route (VyOS) 
 
 
 
