@@ -554,27 +554,27 @@ E..T.	....!.....
 
 .9.$........P.......SW50ZWxsaWdlbmNlIHRocm91Z2ggcGVyc2lzdGVuY2U=
 
-##Encode text to Hex:
+## Encode text to Hex:
 ```
 echo "Message" | xxd
 ```
-##Encode file to Hex:
+## Encode file to Hex:
 ```
 xxd file.txt file-encoded.txt
 ```
-##Decode file from Hex:
+## Decode file from Hex:
 ```
 xxd -r file-encoded.txt file-decoded.txt
 ```
-##Encode text to base64:
+## Encode text to base64:
 ```
 echo "Message" | base64
 ```
-##Endode file to Base64:
+## Endode file to Base64:
 ```
 base64 file.txt > file-encoded.txt
 ```
-##Decode file from Base64:
+## Decode file from Base64:
 ```
 base64 -d file-encoded.txt > file-decoded.txt
 ```
@@ -654,7 +654,7 @@ Upload a file to a remote directory from a local directory
 ```
 $ scp -P 1111 secretstuff.txt student@172.16.82.106:
 ```
-#Loopback address + tunnel's port. Are the 2 items that we need to interact with our tunnels.
+# Loopback address + tunnel's port. Are the 2 items that we need to interact with our tunnels.
 
 Create a Dynamic Port Forward to target device
 ```
@@ -669,21 +669,21 @@ Upload a file to a remote directory from a local directory
 $ proxychains scp secretstuff.txt student@localhost:
 ```
 
-##NETCAT: CLIENT TO LISTENER FILE TRANSFER
+## NETCAT: CLIENT TO LISTENER FILE TRANSFER
 
-###Listener (receive file):
+### Listener (receive file):
 ```
 nc -lvp 9001 > newfile.txt
 ```
-###Client (sends file):
+### Client (sends file):
 ```
 nc 172.16.82.106 9001 < file.txt
 ```
 
-#NETCAT RELAY DEMOS
-##Listener - Listener
+# NETCAT RELAY DEMOS
+## Listener - Listener
 
-###On Blue_Host-1 Relay:
+### On Blue_Host-1 Relay:
 ```
 $ mknod mypipe p
 
@@ -691,11 +691,11 @@ $ nc -lvp 1111 < mypipe | nc -lvp 3333 > mypipe
 ```
 
 
-###On Internet_Host (send):
+### On Internet_Host (send):
 ```
 $ nc 172.16.82.106 1111 < secret.txt
 ```
-###On Blue_Priv_Host-1 (receive):
+### On Blue_Priv_Host-1 (receive):
 ```
 $ nc 192.168.1.1 3333 > newsecret.txt
 ```
