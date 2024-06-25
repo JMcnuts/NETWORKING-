@@ -526,9 +526,8 @@ s.sendto(packet, (dst_ip, 0))
 # socket.send is a low-level method and basically just the C/syscall method send(3) / send(2). It can send fewer bytes than you requested, but returns the number of bytes sent.
 #socket.sendall ﻿is a high-level Python-only method that sends the entire buffer you pass or throws an exception. It does that by calling socket.send ﻿ until everything has been sent or an error occurs.
 
-```
 
-```
+
 student@blue-internet-host-student-2:~$ sudo tcpdump 'tcp[0:2] = 6969' -XXvv
 [sudo] password for student: 
 tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes
@@ -554,7 +553,6 @@ E..T.	....!.....
 
 
 .9.$........P.......SW50ZWxsaWdlbmNlIHRocm91Z2ggcGVyc2lzdGVuY2U=
-```
 
 ##Encode text to Hex:
 ```
@@ -701,20 +699,20 @@ $ nc 172.16.82.106 1111 < secret.txt
 ```
 $ nc 192.168.1.1 3333 > newsecret.txt
 ```
-
+```
 When T2 is pushing jpg (Client)
 Relay will do:
 nc -lvp 1111 < mypipe | nc -lvp 1234 > mypipe
 T1 (Internet host) will do:
 nc 172.16.40.10 1111 > 2steg.jpg
-
-
+```
+```
 When T2 is Listening (Server)
 Relay will do:
 nc -lvp 1111 < mypipe | nc 172.16.82.115 6789 > mypipe
 T1 will do:
 nc 172.16.40.10 1111 > 3steg.jpg
-
+```
 
 
 
