@@ -706,7 +706,7 @@ nc -lvp 1111 < mypipe | nc -lvp 1234 > mypipe
 T1 (Internet host) will do:
 nc 172.16.40.10 1111 > 2steg.jpg
 ```
-# Example of a rely case:
+# Example of a relay case:
 
 ```
 When T2 is Listening (Server)
