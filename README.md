@@ -738,4 +738,33 @@ $ nc -e /bin/bash 10.10.0.40 9999
 ```
 
 
+![image](https://github.com/JMcnuts/NETWORKING-/assets/169089546/d78f7629-0460-4d6f-81f6-95928c0d67c5)
 
+
+6.Which ssh syntax would properly setup a Local tunnel to PC1 SSH port? (Max 2 Attempts)
+A. ssh -L 1111:localhost:22 cctc@10.50.1.150 -NT
+
+9.Which syntax would allow us to download the webpage of PC1 using the Local tunnel created in Question 7? (Max 2 Attempts)
+C. wget -r http://localhost:1111
+
+11.Which ssh syntax would properly setup a Local tunnel to PC2 SSH port using PC1 as your pivot? (Max 2 Attempts)
+D. ssh cctc@10.50.1.150 -L 1111:100.1.1.2:22 -NT
+
+12.Which ssh syntax would properly setup a 2nd Local tunnel to PC2 SSH port using the tunnel made in Question 6 as your first tunnel? (Max 2 Attempts)
+A. ssh -L 2222:100.1.1.2:22 cctc@localhost -p 1111 -NT
+
+13.Which ssh syntax would properly setup a 2nd Local tunnel to PC2 HTTP port using the tunnel made in Question 6 as your first tunnel? (Max 2 Attempts)
+B. ssh cctc@localhost -p 1111 -L 2222:100.1.1.2:80 -NT
+
+15.From the OPS workstation, the Admin is trying to create a Dynamic tunnel to PC2. They created the following tunnels but found that the Dynamic tunnel would not connect. Where did the Admin make the error? (Max 2 Attempts)
+
+1.) ssh cctc@10.50.1.150 -L 1234:100.1.1.2:22 -NT
+2.) ssh -D 9050 cctc@100.1.1.2 -p 1234 -NT
+C. authenticated to wrong IP in line 2
+
+19.Which syntax would properly setup a Remote tunnel from PC3 back to PC2 using PC3 SSH port as the target? (Max 2 Attempts)
+
+C. ssh -R 4444:localhost:22 cctc@192.168.2.1 -NT
+
+20.Which syntax would properly setup a Local tunnel to map to the tunnel made in Question 19 using the tunnel made in Question 6 and Question 12? (Max 2 Attempts)
+A. ssh cctc@localhost -p 2222 -L 5555:localhost:4444 -NT
