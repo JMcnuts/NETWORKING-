@@ -768,3 +768,11 @@ C. ssh -R 4444:localhost:22 cctc@192.168.2.1 -NT
 
 20.Which syntax would properly setup a Local tunnel to map to the tunnel made in Question 19 using the tunnel made in Question 6 and Question 12? (Max 2 Attempts)
 A. ssh cctc@localhost -p 2222 -L 5555:localhost:4444 -NT
+
+
+
+If you can ssh: ssh net1_student2@10.50.20.51 (T3) you can get do -D 9050
+I'm sorry, Dave. I'm afraid I can't do that-Hal, A Space Odyssey!
+There is nothing interesting on this server, however, it used to have access to the 10.4.0.0/24 and 10.5.0.0/24 networks until the admins shut it down. Try to access those networks through another way.
+
+proxychains nmap -Pn 10.5.0.1,57,200 -p 21-23,80
