@@ -784,10 +784,11 @@ proxychains nmap -Pn 10.5.0.1,57,200 -p 21-23,80
 
 
 ![image](https://github.com/JMcnuts/NETWORKING-/assets/169089546/8ed8d693-0f6a-49bf-9dd4-669e0a390dab)
+```
 telnet 10.50.23.19
 ssh student@10.50.23.21 -R 11602:localhost:22
 ssh student@127.0.0.1 -p 11602 -L:10.1.2.18:2222
 ssh student@localhost -p 11603 -L 11604:172.16.10.121:2323
 ssh studetn@localhost -p 11604 -L 11605:195.168.10.69:22
 ssh student@localhost -p 11605 -D 9050
-
+```
