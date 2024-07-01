@@ -792,3 +792,70 @@ ssh student@localhost -p 11603 -L 11604:172.16.10.121:2323
 ssh studetn@localhost -p 11604 -L 11605:195.168.10.69:22
 ssh student@localhost -p 11605 -D 9050
 ```
+
+To input firewall rules on Linux, you typically use firewall management tools such as iptables (traditional firewall) or nftables (modern replacement for iptables). Here’s how you can add firewall rules using both methods:
+
+Using iptables (IPv4)
+Adding a rule to allow incoming SSH (port 22) connections:
+
+bash
+```
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+```
+This command adds a rule (-A INPUT) to the INPUT chain to allow TCP traffic (-p tcp) on destination port 22 (--dport 22) and jump (-j) to ACCEPT.
+
+Adding a rule to allow incoming HTTP (port 80) connections:
+
+bash
+```
+sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+```
+This command allows HTTP traffic on port 80.
+
+Saving iptables rules:
+
+After adding rules, you need to save them to persist across reboots. The exact method varies by distribution, but a common approach is:
+
+bash
+```
+sudo iptables-save > /etc/iptables/rules.v4
+```
+This command saves the current iptables rules to a file (rules.v4). On system startup, you can restore these rules using iptables-restore.
+
+Using nftables (IPv4 and IPv6)
+Adding a rule to allow incoming SSH (port 22) connections:
+
+bash
+```
+sudo nft add rule inet filter input tcp dport 22 accept
+```
+This command adds a rule to the filter table's input chain to accept TCP traffic (tcp) on destination port 22 (dport 22).
+
+Adding a rule to allow incoming HTTP (port 80) connections:
+
+bash
+```
+sudo nft add rule inet filter input tcp dport 80 accept
+```
+This command allows HTTP traffic on port 80.
+
+Saving nftables rules:
+
+To save nftables rules for persistence, you typically create a configuration file. For example:
+
+bash
+```
+sudo nft list ruleset > /etc/nftables.conf
+```
+This command saves the current nftables ruleset to a file (nftables.conf). You can load these rules at boot time by configuring your system to read this file.
+
+Important Notes:
+Permissions: Make sure to execute these commands with sudo or as root to have the necessary permissions to modify firewall rules.
+
+Persistence: To ensure your firewall rules survive a reboot, save them according to your firewall tool's method (e.g., iptables-save for iptables, nft list ruleset > file for nftables).
+
+Security: Always follow best practices and understand the implications of the rules you're adding. Opening unnecessary ports or allowing wide access can compromise your system's security.
+
+These commands provide a basic outline of how to add firewall rules using iptables and nftables on Linux. Adjust them as needed for your specific networking requirements and security policies.
+
+￼
