@@ -860,3 +860,5 @@ Security: Always follow best practices and understand the implications of the ru
 These commands provide a basic outline of how to add firewall rules using iptables and nftables on Linux. Adjust them as needed for your specific networking requirements and security policies.
 
 ￼
+ T@bl3sth@tF1lt3r
+ N@tF1lt3rsf0rL1f3
