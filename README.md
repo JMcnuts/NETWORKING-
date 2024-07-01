@@ -792,6 +792,7 @@ ssh student@localhost -p 11603 -L 11604:172.16.10.121:2323
 ssh studetn@localhost -p 11604 -L 11605:195.168.10.69:22
 ssh student@localhost -p 11605 -D 9050
 ```
+# INPUT FIREWALL RULES:
 
 To input firewall rules on Linux, you typically use firewall management tools such as iptables (traditional firewall) or nftables (modern replacement for iptables). Here’s how you can add firewall rules using both methods:
 
