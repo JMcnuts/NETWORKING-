@@ -859,6 +859,76 @@ Security: Always follow best practices and understand the implications of the ru
 
 These commands provide a basic outline of how to add firewall rules using iptables and nftables on Linux. Adjust them as needed for your specific networking requirements and security policies.
 
-￼
- T@bl3sth@tF1lt3r
- N@tF1lt3rsf0rL1f3
+￼```
+ IPTable Rule Definitions
+
+On T1 edit the /proc/sys/net/ipv4/ip_forward file to enable IP Forwarding. Change the value from 0 to 1.
+
+On T1 change the FORWARD policy back to ACCEPT.
+
+Configure POSTROUTING chain to translate T5 IP address to T1 (Create the rule by specifying the Interface information first then Layer 3)
+
+Once these steps have been completed and tested, go to Pivot and open up a netcat listener on port 9004 and wait up to 2 minutes for your flag. If you did not successfully accomplish the tasks above, then you will not receive the flag.
+```
+cat /proc/sys/net/ipv4/ip_forward
+sudo iptables -L
+sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+sudo iptables -t nat -L
+nc -lnvp 9004
+
+
+```
+
+NFTable Rule Definitions
+
+NFTable: NAT
+Family: ip
+
+On T2 edit the /proc/sys/net/ipv4/ip_forward file to enable IP Forwarding. Change the value from 0 to 1.
+
+Create POSTROUTING and PREROUTING base chains with:
+Hooks
+Priority of 0
+No Policy Needed
+
+Configure POSTROUTING chain to translate T6 IP address to T2 (Create the rule by specifying the Interface information first then Layer 3)
+
+Once these steps have been completed and tested, go to Pivot and open up a netcat listener on port 9005 and wait up to 2 minutes for your flag. If you did not successfully accomplish the tasks above, then you will not receive the flag.
+
+```
+sudo nft add table ip NAT
+sudo nft add chain ip NAT PREROUTING {type nat hook prerouting priority 0 \; }
+sudo nft add chain ip NAT POSTROUTING {type nat hook postrouting priority 0 \; }
+sudo nft list table ip NAT
+sudo nft add rule ip NAT POSTROUTING ip saddr 192.168.3.30 oif eth0 masquerade
+nc -lnvp 9005
+
+
+```
+For verification (only) of your NAT translations:
+
+Validate that T5 can access the web, and Demonstrate the capability to Mission Command
+
+Validate that T6 can access the web, and Demonstrate the capability to Mission Command
+
+
+To get the validation FLAG:
+
+Once you have received the flag for NAT T5 and NAT T6, go to Pivot and perform an md5sum on the combination of NAT T5 and NAT T6 flags combined and separated by underscores.
+
+For example:
+
+echo "NATT5flag_NATT6flag" | md5sum
+
+The MD5 result will be your NAT Validation Flag.
+
+After validation Delete and Flush all created NAT IPTable rules on T1 & T2
+
+```
+echo "0c2ca80fad4accccce3bcecec1d238ce_be33fe60229f8b8ee22931a3820d30ac" | md5sum
+e4f4c65b3884eadf7986adc76caea32c  -
+
+
+
+
+
