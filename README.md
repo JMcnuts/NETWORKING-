@@ -927,8 +927,72 @@ After validation Delete and Flush all created NAT IPTable rules on T1 & T2
 ```
 echo "0c2ca80fad4accccce3bcecec1d238ce_be33fe60229f8b8ee22931a3820d30ac" | md5sum
 e4f4c65b3884eadf7986adc76caea32c  -
+```
+# SNORT
+```
+root@internet-host:/etc/snort# sudo snort -D -c /etc/snort/snort.conf
+
+ps -elf to check that is there.
+
+/etc/snort/rules$ ls 
+cows.rules  dmz.rules  icmp.rules  null.rules  ssh.rules  tcp.rules  wanna.rules
+```
+
+```
+START FLAG: this_whole_ids_is_out_of_line
+
+
+T4 Snort Server (Bob): 10.50.23.232
+
+
+Login Credentials: netN_studentX:passwordX (N=net number and X=student number)
+
+
+Alt SSH Port: 25
+
+
+* DO NOT CREATE YOUR RULES ON THIS SYSTEM *
+
+
+```
+
+```
+
+From here on you will create your rules on either your Opstation or INTERNET-HOST
+
+Using the provided Traffic Capture (/home/activity_resources/pcaps/ids.pcap) how many alerts are created with the default ICMP rule?
+
+You can optionally download the file by using wget --no-check-certificate https://git.cybbh.space/net/public/raw/master/modules/networking/activities/resources/ids.pcap
 
 
 
+tudent@blue-internet-host-student-2:/home/activity_resources/pcaps$ sudo snort -r ids.pcap -c /etc/snort/snort.conf 
+```
 
+
+```
+Utilizing your INTERNET_HOST, create a new rule called dmz.rules.
+
+Rule Definition:
+alert
+any ICMP Echo Requests Detects Type 8 / Code 0 To 10.3.0.0/24
+Generate the message DMZ Ping
+Set sid to 1000002
+
+Provide the complete working rule that you created as the flag.
+
+Example:
+
+TYPE proto IP PORT -> IP PORT (msg:"";itype:;icode:;sid:;)
+```
+```
+alert icmp any any -> 10.3.0.0/24 any (msg:"DMZ Ping";itype:8;icode:0;sid:1000002;)
+```
+
+```
+Utilizing your INTERNET_HOST, and the provided Traffic Capture how many alerts are created for ICMP Echo Request messages to 10.3.0.0/24?
+
+```
+student@blue-internet-host-student-2:/home/activity_resources/pcaps$ sudo snort -r ids.pcap -c /etc/snort/rules/dmz.rules
+```
 
