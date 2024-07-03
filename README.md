@@ -250,7 +250,7 @@ s.close()
 import socket
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
+s.bind(('',PORT)) ??
 ipaddr = '127.0.0.1'
 port = 2222
 
