@@ -996,3 +996,5 @@ Utilizing your INTERNET_HOST, and the provided Traffic Capture how many alerts a
 student@blue-internet-host-student-2:/home/activity_resources/pcaps$ sudo snort -r ids.pcap -c /etc/snort/rules/dmz.rules
 ```
 
+sudo sysctl -w net.ipv4.ip_default_ttl=255 *change ttl to a cisco device
+
