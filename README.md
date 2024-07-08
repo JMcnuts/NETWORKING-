@@ -206,6 +206,11 @@ tcp[13] & 0x11 = 0x11 #ACK/FIN both have to be on.
 ```
 tcp[13] & 0x11 > 0 Can be any combination except both off
 tcp[13] & 0x11 !=0 Can be any combination except both off
+
+ tcpdump -i eth0 dst 520  -vv -XX
+
+
+
 ```
 BPFS -R
 
@@ -995,4 +1000,11 @@ Utilizing your INTERNET_HOST, and the provided Traffic Capture how many alerts a
 ```
 student@blue-internet-host-student-2:/home/activity_resources/pcaps$ sudo snort -r ids.pcap -c /etc/snort/rules/dmz.rules
 ```
+```
+for i in {1..254}; do (ping -c 1 192.168.65.$i | grep "bytes from" &) ; done
+```
+```
+proxychains curl -i http://10.1.1.125:125
 
+A
+```
