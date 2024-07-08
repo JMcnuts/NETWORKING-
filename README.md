@@ -47,7 +47,7 @@ MAC. Medium Access Control. Controls transpond from layer 2 to layer 3.
 LLC. Logical Link Control. Controls transpond from layer 3 to layer 2.
 CAM table (Content-addressable memory) allows very fast searching and table lookups. 
 ```
-
+A
 ## Switching Modes:
 ```
 -Store-and-Forward accepts and analyzes the entire frame before forwarding it to its destination. It takes more time to examine the entire frame, but it allows the switch to catch certain frame errors and collisions and keep them from propagating bad frames through the network. This method is required to switch frames between links of different speeds; this is due to bit-timing. The speed at which the bits enter one interface may be slower than the speed at which the switch needs to send the bits to a different interface.
